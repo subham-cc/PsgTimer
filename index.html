@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PSG Timer</title>
+	<link rel="stylesheet" href="css/psg-timer.css" />
+</head>
+<body>
+	<div class="timer-box">
+		<h3 style="text-align: center;">PsgTimer with Countdown Timeout (with page refresh)</h3>
+        <div id="psgTimer"></div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/psg-timer.js"></script>
+    <script type="text/javascript">
+    	function getEndDateTime(){
+    		var duration = (1000 * 60 * 5); // 5 mins
+    	    var createEndDateTime = Date.now() + duration;
+    	    if( localStorage.getItem("psgTimer_timeout") != null ){
+    	        return parseInt(localStorage.getItem("psgTimer_timeout"));
+    	    }
+    	    else{
+    	        localStorage.setItem("psgTimer_timeout", createEndDateTime);
+    	        return parseInt(createEndDateTime);
+    	    }
+    	}
+
+    	document.addEventListener('DOMContentLoaded', function () {
+    		var timer = new PsgTimer({
+    			selector: '#psgTimer',
+    			currentDateTime: Date.now(),
+    			endDateTime: getEndDateTime(),
+    			multilpeBlocks: true,
+    			animation: 'fade',
+    			labels: {
+    				days: 'Days',
+    				hours: 'HRS',
+    				minutes: 'MINS',
+    				seconds: 'SECS'
+    			},
+    			callbacks: {
+    				onInit: function () {
+    					console.log('psgTimer initiated');
+    				},
+    	            onChangeStart: function () {
+    	            	// console.log('psgTimer updated');
+    	            }
+    			}
+    		});
+    	})
+ 
+    </script>
+</body>
+</html>
